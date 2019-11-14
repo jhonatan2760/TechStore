@@ -15,7 +15,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
-import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -63,7 +62,8 @@ public class ProductController {
                     ProductItem productItem = productRequest.toItem();
                     productItem.setUuid(id);
                     return this.productService.update(productItem);
-                }).flatMap(it -> Mono.just(ResponseEntity.ok(it));
+                }).flatMap(it -> Mono.just(ResponseEntity.ok(it)));
     }
+
 
 }

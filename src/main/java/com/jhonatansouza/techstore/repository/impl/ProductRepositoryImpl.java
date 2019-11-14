@@ -50,4 +50,14 @@ public class ProductRepositoryImpl implements ProductRepository {
                                             .collect(Collectors.toList()))).flatMapMany(br -> Flux.fromIterable(br));
     }
 
+    @Override
+    public Mono<ProductItem> update(ProductItem productItem) {
+        return Mono.fromFuture(this.dynamoDbAsyncClient.updateItem(UpdateItemRequest.builder()
+                .key(productItem.keyMapper())
+                .tableName(this.tableName)
+                .attributeUpdates(productItem.update()).build())
+                .thenApplyAsync(UpdateItemResponse::hashCode)
+                .thenApply(p -> productItem));
+    }
+
 }

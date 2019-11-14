@@ -37,4 +37,9 @@ public class ProductServiceImpl implements ProductService {
     public Flux<ProductItem> getAll() throws ExecutionException, InterruptedException {
         return this.productRepository.getAll();
     }
+
+    @Override
+    public Mono<ProductItem> update(ProductItem productItem) {
+        return this.productRepository.update(productItem);
+    }
 }

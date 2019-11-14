@@ -39,4 +39,13 @@ public class ProductRequest {
         productItem.setQuantity(this.quantity);
         return productItem;
     }
+
+    @Override
+    public String toString() {
+        return "ProductRequest{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

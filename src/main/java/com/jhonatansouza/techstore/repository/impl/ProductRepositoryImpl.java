@@ -11,6 +11,7 @@ import software.amazon.awssdk.services.dynamodb.model.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -32,12 +33,12 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public Mono<ProductItem> findById(String id) {
+    public Mono<Optional<ProductItem>> findById(String id) {
         Map<String, AttributeValue> key = new HashMap<>();
         key.put("uuid", AttributeValue.builder().s(id).build());
         return Mono.fromFuture(this.dynamoDbAsyncClient.getItem(GetItemRequest.builder().tableName(this.tableName).key(key).build())
                     .thenApplyAsync(GetItemResponse::item)
-                    .thenApply(item -> new ProductItem(item)));
+                    .thenApply(item -> item.isEmpty() ? null : new ProductItem(item)).thenApply(Optional::ofNullable));
     }
 
     @Override

@@ -16,10 +16,10 @@ public class ProductItem {
     }
 
     public ProductItem(Map<String, AttributeValue> preItem){
-        this.uuid = preItem.get("uuid").s();
-        this.name = preItem.get("name").s();
-        this.description = preItem.get("description").s();
-        this.quantity = Integer.parseInt(preItem.get("quantity").n());
+            this.uuid = preItem.get("uuid").s();
+            this.name = preItem.get("name").s();
+            this.description = preItem.get("description").s();
+            this.quantity = Integer.parseInt(preItem.get("quantity").n());
     }
 
     public String getUuid() {

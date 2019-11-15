@@ -42,8 +42,13 @@ public class ProductController {
     @GetMapping("/{id}")
     public Mono<ResponseEntity> getProductById(@PathVariable String id){
         return this.productService.findById(id)
-                .doOnSuccess(success -> this.logger.info("Product found w/ success [{}]", success.get().getUuid()))
-                .doOnError(error -> this.logger.error("Failed to find product w/ id [{}]", id))
+                .doOnSuccess(success -> {
+                    if(success.isPresent()){
+                        this.logger.info("Product found w/ success [{}]", success.get().getUuid());
+                    }else{
+                        this.logger.info("Product n/found id [{}]", id);
+                    }
+                }).doOnError(error -> this.logger.error("Failed to find product w/ id [{}]", id))
                 .map(item -> item.isPresent() ? ResponseEntity.ok(item) : ResponseEntity.notFound().build());
     }
 
@@ -55,15 +60,18 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<?>> updateProduct(@PathVariable String id, @RequestBody ProductRequest productRequest){
+    public Mono<ResponseEntity<Object>> updateProduct(@PathVariable String id, @RequestBody ProductRequest productRequest){
         return this.productService.findById(id)
-                //.switchIfEmpty(Mono.just(ResponseEntity.notFound().build()))
-                .flatMap(product -> {
-                    ProductItem productItem = productRequest.toItem();
-                    productItem.setUuid(id);
-                    return this.productService.update(productItem);
-                }).flatMap(it -> Mono.just(ResponseEntity.ok(it)));
+                .doOnSuccess(success -> this.logger.info("Product updated w/success"))
+                .doOnError(err -> this.logger.error("failed to update product"))
+                .map(product -> {
+                        return product.isPresent() ? ResponseEntity.ok(this.productService.update(productRequest.toItemWithId(id))) : ResponseEntity.notFound().build();
+                });
     }
 
+    @DeleteMapping("/{id}")
+    public Mono<ResponseEntity> delete(@PathVariable("id") String uuid){
+        return this.productService.delete(new ProductRequest().toItemWithId(uuid)).thenReturn(ResponseEntity.noContent().build());
+    }
 
 }

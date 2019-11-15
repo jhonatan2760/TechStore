@@ -40,6 +40,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Mono<ProductItem> update(ProductItem productItem) {
-        return this.productRepository.update(productItem);
+        return this.productRepository.findById(productItem.getUuid())
+                .flatMap(productItemReceiver -> this.productRepository.update(productItem));
+    }
+
+    @Override
+    public Mono<Void> delete(ProductItem productItem) {
+        return this.productRepository.findById(productItem.getUuid())
+                .flatMap(productItem1 -> this.productRepository.delete(productItem));
     }
 }

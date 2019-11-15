@@ -13,5 +13,6 @@ public interface ProductRepository {
     Mono<Optional<ProductItem>> findById(String id);
     Flux<ProductItem> getAll() throws ExecutionException, InterruptedException;
     Mono<ProductItem> update(ProductItem productItem);
+    Mono<Void> delete(ProductItem productItem);
 
 }

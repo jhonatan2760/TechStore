@@ -40,6 +40,13 @@ public class ProductRequest {
         return productItem;
     }
 
+    //avoid builder use
+    public ProductItem toItemWithId(String uuid){
+        ProductItem productItem = this.toItem();
+        productItem.setUuid(uuid);
+        return productItem;
+    }
+
     @Override
     public String toString() {
         return "ProductRequest{" +

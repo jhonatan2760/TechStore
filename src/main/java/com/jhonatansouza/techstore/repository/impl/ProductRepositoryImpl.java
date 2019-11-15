@@ -60,4 +60,11 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .thenApply(p -> productItem));
     }
 
+    @Override
+    public Mono<Void> delete(ProductItem productItem) {
+        return Mono.fromFuture(this.dynamoDbAsyncClient
+                .deleteItem(DeleteItemRequest.builder().tableName(this.tableName).key(productItem.keyMapper()).build())).then();
+    }
+
+
 }

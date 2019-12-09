@@ -1,4 +1,4 @@
-package com.jhonatansouza.techstore.controller.response;
+package com.jhonatansouza.techstore.response;
 
 import java.time.LocalDateTime;
 

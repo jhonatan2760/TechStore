@@ -1,11 +1,19 @@
-package com.jhonatansouza.techstore.controller.request;
+package com.jhonatansouza.techstore.request;
 
 import com.jhonatansouza.techstore.model.ProductItem;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class ProductRequest {
 
+    @NotNull
     private String name;
+    @NotNull
     private String description;
+    @Min(1)
+    @Max(100)
     private int quantity;
 
     public String getName() {

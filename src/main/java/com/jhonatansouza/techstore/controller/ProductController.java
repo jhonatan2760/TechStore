@@ -1,7 +1,7 @@
 package com.jhonatansouza.techstore.controller;
 
-import com.jhonatansouza.techstore.controller.request.ProductRequest;
-import com.jhonatansouza.techstore.controller.response.ErrorResponse;
+import com.jhonatansouza.techstore.request.ProductRequest;
+import com.jhonatansouza.techstore.response.ErrorResponse;
 import com.jhonatansouza.techstore.model.ProductItem;
 import com.jhonatansouza.techstore.service.ProductService;
 import org.slf4j.Logger;
@@ -14,11 +14,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@RequestMapping("/tech-store/api/v1")
+@RequestMapping("/tech-store/api/v1/products")
 public class ProductController {
 
     private Logger logger = LoggerFactory.getLogger(ProductController.class);
@@ -27,7 +28,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/")
-    public Mono<ResponseEntity<Object>> createProduct(@RequestBody ProductRequest productRequest, UriComponentsBuilder uriComponentsBuilder){
+    public Mono<ResponseEntity<Object>> createProduct(@RequestBody @Valid ProductRequest productRequest, UriComponentsBuilder uriComponentsBuilder){
         return this.productService.createItem(productRequest.toItem())
                 .doOnSuccess(success -> {
                   this.logger.info("Product created with success - [{}]", productRequest.toString());

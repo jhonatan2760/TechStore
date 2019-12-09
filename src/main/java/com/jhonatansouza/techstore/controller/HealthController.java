@@ -1,7 +1,7 @@
 package com.jhonatansouza.techstore.controller;
 
 import com.jhonatansouza.techstore.configuration.DynamoDbAsync;
-import com.jhonatansouza.techstore.controller.response.HealthResponse;
+import com.jhonatansouza.techstore.response.HealthResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -14,18 +14,12 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	// https://mvnrepository.com/artifact/software.amazon.awssdk/aws-sdk-java
 	compile group: 'software.amazon.awssdk', name: 'aws-sdk-java', version: '2.10.15'
-	// https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-dynamodb
 	compile group: 'com.amazonaws', name: 'aws-java-sdk-dynamodb', version: '1.11.673'
-	// https://mvnrepository.com/artifact/io.rest-assured/rest-assured
-	testCompile group: 'io.rest-assured', name: 'rest-assured', version: '4.1.2'
-	// https://mvnrepository.com/artifact/com.github.tomakehurst/wiremock
-	testCompile group: 'com.github.tomakehurst', name: 'wiremock', version: '2.25.1', ext: 'pom'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-	testImplementation 'io.projectreactor:reactor-test'
+	
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'com.jayway.restassured:rest-assured:2.9.0'
+	
 }
 
 test {
